@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: UNLICENSED
+
+pragma solidty ^0.8.0;
+
+import "hardhat/console.sol";
+
+contract WavePortal {
+    uint totalWaves;
+    
+    constructor() {
+        console.log("bdaly wassup!!");
+    }
+    // POST Function
+    function wave() public {
+        totalWaves += 1;
+        console.log("Just got a wave! totalWaves = %s", totalWaves);
+    }
+    
+    // GET Function
+    function getTotalWaves () public view return (uint) {
+        return TotalWaves;
+    }
+}
