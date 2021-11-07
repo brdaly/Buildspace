@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidty ^0.8.0;
+pragma solidity ^0.8.4;
 
 import "hardhat/console.sol";
 
-contract WavePortal {
+contract MyEthProject {
     uint totalWaves;
-    
+
     constructor() {
-        console.log("bdaly wassup!!");
+        console.log("brdaly wassup!!");
     }
+    
     // POST Function
     function wave() public {
         totalWaves += 1;
         console.log("Just got a wave! totalWaves = %s", totalWaves);
     }
-    
     // GET Function
-    function getTotalWaves () public view return (uint) {
-        return TotalWaves;
+    function getTotalWaves() public view returns (uint) {
+        return totalWaves;
     }
 }
