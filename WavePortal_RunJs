@@ -1,0 +1,37 @@
+
+const main = async() => {
+
+//Compile Contract 
+const contractFactory = await hre.ethers.getContractFactory("WavePortal");
+
+//Deploy Contract to local node:
+const contract = await contractFactory.deploy();
+
+//Confirm when it's done deploying 
+//Confirmation of mining complete
+await contract.deployed();
+
+console.log("Deployed!! Contract address:", contract.address);
+
+
+let txn = await contract.wave()
+//Wait for transaction to be mined and confirmed
+await txn.wait();
+
+txn = await contract.wave()
+await txn.wait();
+
+}
+
+
+const runMain = async () => {
+    try {
+        await main();
+        process.exit(0);
+    }   catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+};
+
+runMain();
