@@ -1,34 +1,49 @@
+const main = async () => {
+  const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
+  const waveContract = await waveContractFactory.deploy({
+    value: hre.ethers.utils.parseEther('2.4069'),
+  });
+  await waveContract.deployed();
+  console.log('Contract addy:', waveContract.address);
 
-const main = async() => {
+  /*
+   * Get Contract balance
+   */
+  let contractBalance = await hre.ethers.provider.getBalance(
+    waveContract.address
+  );
+  console.log(
+    'Contract balance:',
+    hre.ethers.utils.formatEther(contractBalance)
+  );
 
-    //Compile Smart Contract 
-    const contractFactory = await hre.ethers.getContractFactory("MyEthProject");
-    
-    //Deploy Contract to local node:
-    const contract = await contractFactory.deploy();
-    
-    //Confirm when it's done deploying 
-    //Confirmation of mining complete
-    await contract.deployed();
-    
-    console.log("Successfully Deployed!! Contract Address:", contract.address);
-    
-    let txn = await contract.wave();
-    await txn.wait();
+  /*
+   * Send Wave
+   */
+  let waveTxn = await waveContract.wave('A message!');
+  await waveTxn.wait();
 
-    txn = await contract.wave();
-    await txn.wait();
+  /*
+   * Get Contract balance to see what happened!
+   */
+  contractBalance = await hre.ethers.provider.getBalance(waveContract.address);
+  console.log(
+    'Contract balance:',
+    hre.ethers.utils.formatEther(contractBalance)
+  );
 
-    }
-    
-    const runMain = async () => {
-        try {
-            await main();
-            process.exit(0);
-        }   catch (error) {
-            console.log(error);
-            process.exit(1);
-        }
-    };
-    
-    runMain();
+  let allWaves = await waveContract.getAllWaves();
+  console.log(allWaves);
+};
+
+const runMain = async () => {
+  try {
+    await main();
+    process.exit(0);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+
+runMain();
