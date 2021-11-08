@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
@@ -21,13 +21,13 @@ contract WelcomePortal {
     mapping(address => uint256) public lastWavedAt;
 
     constructor() payable {
-        console.log("Smart Contract Success");
+        console.log("Welcome smart contract deployed successfully");
         seed = (block.timestamp + block.difficulty) % 100;
     }
 
     function wave(string memory _message) public {
 
-        require(lastWavedAt[msg.sender] + 60 seconds < block.timestamp, "You can try again in 60 seconds");
+        require(lastWavedAt[msg.sender] + 60 seconds < block.timestamp, "You can try again after 60 seconds");
 
         lastWavedAt[msg.sender] = block.timestamp;
         totalWaves += 1;
@@ -42,10 +42,10 @@ contract WelcomePortal {
             uint256 prizeAmount = 0.69420 ether;
             require(
                 prizeAmount <= address(this).balance,
-                "Welcome contract has insufficent funds."
+                "Welcome contract has run out of funding.Try again later"
             );
             (bool success, ) = (msg.sender).call{value: prizeAmount}("");
-            require(success, "Failed to withdraw winnings from contract.");
+            require(success, "This contract has nothing left to gift.");
         }
 
         emit NewWave(msg.sender, block.timestamp, _message);
