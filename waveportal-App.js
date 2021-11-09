@@ -145,6 +145,15 @@ const App = () => {
           </button>
         )}
 
+          <div>
+            <p>You clicked {AllWaves} times</p>
+            <button onClick={() => setAllwaves(count + 1)}>
+              Click me
+            </button>
+          </div>
+        );
+      }
+
         {allWaves.map((wave, index) => {
           return (
             <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
